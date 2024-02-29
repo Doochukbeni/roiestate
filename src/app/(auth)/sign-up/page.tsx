@@ -4,9 +4,12 @@ import React from "react";
 
 const page = () => {
   return (
-    <section className="h-screen">
+    <>
       <div className="flex flex-col rounded-lg items-center w-full mx-auto bg-zinc-50 p-5  max-w-[600px]">
-        <h1 className="font-semibold text-4xl text-slate-800 ">Sign up </h1>
+        <h1 className="font-bold text-4xl text-slate-800 ">Sign up </h1>
+        <p className="text-lg text-zinc-500 font-semibold text-center mt-5">
+          Sign up to List and share your Properties with clients.
+        </p>
         <form className="w-full h-full my-10">
           <div className="relative w-full mb-4">
             <input
@@ -72,8 +75,10 @@ const page = () => {
               Privacy Policy and Cookies Policy .
             </span>
           </p>
-          <Button className="w-full mt-5  rounded-2xl h-12">Sign Up</Button>
-          <h1 className="text-2xl text-muted-foreground font-semibold text-center mt-2">
+          <Button className="w-full mt-5 bg-blue-500  rounded-2xl h-12">
+            Sign Up
+          </Button>
+          <h1 className="text-xl text-zinc-400  font-semibold text-center mt-2">
             OR
           </h1>
           <Button className="w-full mt-5 bg-red-400 rounded-2xl h-12">
@@ -88,7 +93,7 @@ const page = () => {
           </Link>
         </div>
       </div>
-    </section>
+    </>
   );
 };
 
