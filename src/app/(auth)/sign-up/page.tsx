@@ -1,8 +1,24 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import React from "react";
+import { useState } from "react";
+
+type UserForm = {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 const page = () => {
+  const [user, setUser] = useState<UserForm>({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
   return (
     <>
       <div className="flex flex-col rounded-lg items-center w-full mx-auto bg-zinc-50 p-5  max-w-[600px]">

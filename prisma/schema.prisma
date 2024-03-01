@@ -34,7 +34,7 @@ model User {
 
   accounts                        Account[]
   sessions                        Session[]
-  property                            Property[] 
+  property                        Property[] 
 
 }
 
