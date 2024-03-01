@@ -12,3 +12,96 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+enum PropertyType{
+  Sales 
+  Rent
+}
+
+
+model User {
+  id                              String   @id @default(auto()) @map("_id") @db.ObjectId
+  name                            String
+  image                           String?
+  email                           String?   @unique
+  emailVerified                   DateTime?
+  hashedPassword                  String?
+  mobileNumber                    String?
+  createdEstate                   Estate[] @relation("CreatedBy")
+
+  createdAt                       DateTime @default(now())
+  updatedAt                       DateTime @updatedAt
+
+  accounts                        Account[]
+  sessions                        Session[]
+  property                            Property[] 
+
+}
+
+model Account {
+  id                              String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId                          String   @db.ObjectId
+  type                            String
+  provider                        String
+  providerAccountId               String
+  refresh_token                   String? @db.String
+  access_token                    String? @db.String
+  expires_at                      Int?
+  token_type                      String?
+  scope                           String?
+  id_token                        String? @db.String
+  session_state                   String?
+
+  user                            User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id                              String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId                          String   @db.ObjectId
+  sessionToken                    String   @unique
+  expires                         DateTime
+  user                            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken{
+  id                              String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier                      String
+  token                           String   @unique
+  expires                         DateTime
+
+  @@unique([identifier,token])
+}
+
+
+model Estate {
+  id                              String    @id @default(auto()) @map("_id") @db.ObjectId
+  name                            String    @unique
+  createdAt                       DateTime  @default(now())
+  updatedAt                       DateTime  @updatedAt
+  property                        Property[]
+
+  creatorId                       String?   @db.ObjectId
+  Creator                         User?     @relation("CreatedBy", fields: [creatorId], references: [id])
+ 
+}
+
+
+
+
+model Property {
+  id                               String   @id @default(auto()) @map("_id") @db.ObjectId
+  title                            String
+  content                          Json?
+  createdAt                        DateTime @default(now())
+  updatedAt                        DateTime @updatedAt
+
+  estate                           Estate   @relation(fields: [estateId],references: [id])
+  estateId                         String   @db.ObjectId
+
+  author                           User     @relation(fields: [authorId],references: [id])
+  authorId                         String   @db.ObjectId
+
+  type                             PropertyType
+}
