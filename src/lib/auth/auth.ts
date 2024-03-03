@@ -1,8 +1,9 @@
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import prismaDb from "@/lib/prismadb/prismadb";
+import { prismaDb } from "@/lib/prismadb/prismadb";
 import { compare } from "bcrypt";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 // function getGoogleCredentials() {
 //   const clientId = process.env.GOOGLE_CLIENT_ID;
@@ -19,6 +20,7 @@ import { compare } from "bcrypt";
 // }
 
 export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prismaDb),
   providers: [
     Credentials({
       id: "credentials",
@@ -34,13 +36,13 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) {
+        if (!credentials?.email || !credentials?.password) {
           throw new Error("Email and password Required");
         }
 
         const user = await prismaDb.user.findUnique({
           where: {
-            email: credentials.email,
+            email: credentials?.email,
           },
         });
 
