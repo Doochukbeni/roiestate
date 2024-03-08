@@ -14,14 +14,14 @@ datasource db {
 }
 
 enum PropertyType{
-  Sales 
-  Rent
+  SALES 
+  RENT
 }
 
 
 model User {
   id                              String   @id @default(auto()) @map("_id") @db.ObjectId
-  name                            String
+  name                            String?
   image                           String?
   email                           String?   @unique
   emailVerified                   DateTime?
@@ -93,6 +93,8 @@ model Estate {
 model Property {
   id                               String   @id @default(auto()) @map("_id") @db.ObjectId
   title                            String
+  description                      String
+  location                         String
   content                          Json?
   createdAt                        DateTime @default(now())
   updatedAt                        DateTime @updatedAt

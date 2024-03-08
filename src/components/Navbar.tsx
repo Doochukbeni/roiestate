@@ -1,9 +1,11 @@
 import Link from "next/link";
 import React from "react";
 import SearchBar from "./SearchBar";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
+import { cn } from "@/lib/utils";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const session = {};
   return (
     <header className="border border-b border-gray-300 shadow-sm">
       <nav className="container flex items-center mx-auto justify-between py-4 px-6">
@@ -23,9 +25,15 @@ const Navbar = () => {
             <li>Profile</li>
             <li>Contact</li>
           </ul>
-          <Button variant="outline" size="sm" className="ml-3">
-            Login
-          </Button>
+          <Link
+            href={"/sign-in"}
+            className={cn(
+              buttonVariants(),
+              "ml-3 bg-zinc-300 text-slate-900 hover:text-slate-800 hover:bg-zinc-400 transition-colors"
+            )}
+          >
+            {session ? "Sign out" : "Sign in"}
+          </Link>
         </div>
       </nav>
     </header>

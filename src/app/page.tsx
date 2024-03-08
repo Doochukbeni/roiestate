@@ -1,5 +1,7 @@
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24"></main>
+    <>
+      <h1 className="font-bold text-3xl md:text-4xl">Welcome to Doo-Homes </h1>
+    </>
   );
 }
